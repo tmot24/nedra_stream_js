@@ -1,12 +1,17 @@
 import {connect} from "react-redux"
-import {Cars} from "./cars"
 import {getCars} from "../redux/carsReducer"
+import {BasicTable} from "./basic-table"
+import {useEffect} from "react"
 
 const CarsContainer = ({cars, getCars}) => {
 
+    useEffect(() => {
+        getCars()
+    }, [getCars])
+
     return (
         <div>
-            <Cars cars={cars} getCars={getCars}/>
+            <BasicTable cars={cars}/>
         </div>
     )
 }

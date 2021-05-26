@@ -6,11 +6,9 @@ import {CssBaseline} from "@material-ui/core"
 import {store} from "./components/redux/store"
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <CssBaseline/>
-            <App/>
-        </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+        <CssBaseline/>
+        <App/>
+    </Provider>,
     document.getElementById("root"),
 )

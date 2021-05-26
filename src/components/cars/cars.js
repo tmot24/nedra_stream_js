@@ -1,11 +1,6 @@
-import {useEffect} from "react"
 import {Card, CardContent} from "@material-ui/core"
 
-export const Cars = ({cars, getCars}) => {
-
-    useEffect(() => {
-        getCars()
-    }, [getCars])
+export const Cars = ({cars}) => {
 
     return (
         <div>
