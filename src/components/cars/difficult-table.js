@@ -1,5 +1,5 @@
 import {Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel,} from "@material-ui/core"
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import {makeStyles} from "@material-ui/core/styles"
 import {InputComponent} from "../controls/inputComponent"
 import {SelectPanelYear} from "./selectPanelYear"
@@ -32,6 +32,7 @@ const useStyles = makeStyles({
 })
 
 export const DifficultTable = ({cars}) => {
+    const classes = useStyles()
     const [records, setRecords] = useState([])
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -43,13 +44,12 @@ export const DifficultTable = ({cars}) => {
     const [fuelFilter, setFuelFilter] = useState("")
     const [bodyTypeFilter, setBodyTypeFilter] = useState("")
     const [priceFilter, setPriceFilter] = useState("")
-    const [pagesLength, setPagesLength] = useState(0)
+    const pagesLength = useRef(0)
 
-    const classes = useStyles()
 
     useEffect(() => {
         setRecords(cars)
-        setPagesLength(cars.length)
+        pagesLength.current = cars.length
     }, [cars])
 
     const handleChangePage = (event, newPage) => {
@@ -85,7 +85,7 @@ export const DifficultTable = ({cars}) => {
             .filter(x => x.bodyType.includes(bodyTypeFilter))
             .filter(x => String(x.price).includes(priceFilter))
 
-        // setPagesLength(filterArray.length)
+        pagesLength.current = filterArray.length
 
         const stabilizedThis = filterArray.map((el, index) => [el, index])
         stabilizedThis.sort((a, b) => {
@@ -156,7 +156,7 @@ export const DifficultTable = ({cars}) => {
                              page={page}
                              rowsPerPageOptions={pages}
                              rowsPerPage={rowsPerPage}
-                             count={pagesLength}
+                             count={pagesLength.current}
                              onChangePage={handleChangePage}
                              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
