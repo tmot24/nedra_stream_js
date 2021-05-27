@@ -126,7 +126,7 @@ export const db = {
         new Car("Renault", "Modus", 2004, "diesel", "hatchback", 9000),
         new Car("Renault", "Twizy", 2012, "petrol", "estate", 5000),
         new Car("Rolls-Royce", "Wraith", 2013, "electric", "suv", 7000),
-        new Car("Saab", "09.мар", 2003, "hybrid", "sedan", 2000),
+        new Car("Saab", "9-3", 2003, "hybrid", "sedan", 2000),
         new Car("Saturn", "Sky", 2007, "diesel", "mpv", 10000),
         new Car("Seat", "Altea", 2004, "petrol", "pickup", 8000),
         new Car("Seat", "Leon", 1999, "electric", "cabrio", 3000),
