@@ -6,15 +6,19 @@ import {
     TablePagination,
     TableRow,
     TableSortLabel,
-    Toolbar
 } from "@material-ui/core"
 import {useEffect, useState} from "react"
 import {makeStyles} from "@material-ui/core/styles"
+import {InputComponent} from "../controls/inputComponent"
 
 const useStyles = makeStyles({
-    headCell: {
+    head: {
         backgroundColor: "#c0e4ff",
         borderBottom: "1px solid black",
+        width: 600
+    },
+    headCell: {
+        display: "flex"
     }
 })
 
@@ -24,6 +28,11 @@ export const DifficultTable = ({cars}) => {
     const [rowsPerPage, setRowsPerPage] = useState(10)
     const [order, setOrder] = useState()
     const [orderBy, setOrderBy] = useState()
+    const [filterFn, setFilterFn] = useState({
+        fn: items => {
+            return items
+        }
+    })
     const classes = useStyles()
 
     useEffect(() => {
@@ -74,24 +83,44 @@ export const DifficultTable = ({cars}) => {
         return 0
     }
 
+    const handleSearchProp = (e, prop) => {
+        let target = e.target
+        setFilterFn({
+            fn: items => {
+                if (target.value === "") return items
+                else return items.filter(x => x[prop].toLowerCase().includes(target.value.toLowerCase()))
+            }
+        })
+    }
+
+    const recordsAfterPagingAndSorting = () => {
+        return stableSort(filterFn.fn(records), getComparator(order, orderBy))
+            .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+    }
+
     return (
         <>
-            <Toolbar>
-
-            </Toolbar>
             <Table stickyHeader>
                 <TableHead>
                     <TableRow>
                         {
                             headerTitle.map((item, index) =>
-                                <TableCell key={index} className={classes.headCell}>
-                                    <TableSortLabel
-                                        active={orderBy === item.id}
-                                        direction={orderBy === item.id ? order : "asc"}
-                                        onClick={() => handleSortRequest(item.id)}
-                                    >
-                                        {item.label}
-                                    </TableSortLabel>
+                                <TableCell key={index} className={classes.head}>
+                                    <div className={classes.headCell}>
+                                        <TableSortLabel
+                                            active={orderBy === item.id}
+                                            direction={orderBy === item.id ? order : "asc"}
+                                            onClick={() => handleSortRequest(item.id)}
+                                        >
+                                            {item.label}
+                                        </TableSortLabel>
+                                        {item.label === "Brand" && <InputComponent label={"Search brands"}
+                                                                                   onChange={(e) => handleSearchProp(e, "brand")}/>
+                                        }
+                                        {item.label === "Model" && <InputComponent label={"Search Model"}
+                                                                                   onChange={(e) => handleSearchProp(e, "model")}/>
+                                        }
+                                    </div>
                                 </TableCell>
                             )
                         }
@@ -99,7 +128,7 @@ export const DifficultTable = ({cars}) => {
                 </TableHead>
                 <TableBody>
                     {
-                        stableSort(records, getComparator(order, orderBy)).slice(page * rowsPerPage, (page + 1) * rowsPerPage).map((item, index) =>
+                        recordsAfterPagingAndSorting().map((item, index) =>
                             <TableRow key={index}>
                                 <TableCell>{item.brand}</TableCell>
                                 <TableCell>{item.model}</TableCell>
