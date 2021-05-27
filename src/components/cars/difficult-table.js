@@ -1,4 +1,13 @@
-import {Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel} from "@material-ui/core"
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TablePagination,
+    TableRow,
+    TableSortLabel,
+    Toolbar
+} from "@material-ui/core"
 import {useEffect, useState} from "react"
 import {makeStyles} from "@material-ui/core/styles"
 
@@ -43,16 +52,44 @@ export const DifficultTable = ({cars}) => {
         setOrderBy(cellId)
     }
 
+    const stableSort = (array, comparator) => {
+        const stabilizedThis = array.map((el, index) => [el, index])
+        stabilizedThis.sort((a, b) => {
+            const order = comparator(a[0], b[0])
+            if (order !== 0) return order
+            return a[1] - b[1]
+        })
+        return stabilizedThis.map(el => el[0])
+    }
+
+    const getComparator = (order, orderBy) => {
+        return order === "desc"
+            ? (a, b) => descendingComparator(a, b, orderBy)
+            : (a, b) => -descendingComparator(a, b, orderBy)
+    }
+
+    const descendingComparator = (a, b, orderBy) => {
+        if (b[orderBy] < a[orderBy]) return -1
+        if (b[orderBy] > a[orderBy]) return 1
+        return 0
+    }
+
     return (
         <>
+            <Toolbar>
+
+            </Toolbar>
             <Table stickyHeader>
                 <TableHead>
                     <TableRow>
                         {
                             headerTitle.map((item, index) =>
                                 <TableCell key={index} className={classes.headCell}>
-                                    <TableSortLabel onClick={() => handleSortRequest(item.id)}>
-                                        direction
+                                    <TableSortLabel
+                                        active={orderBy === item.id}
+                                        direction={orderBy === item.id ? order : "asc"}
+                                        onClick={() => handleSortRequest(item.id)}
+                                    >
                                         {item.label}
                                     </TableSortLabel>
                                 </TableCell>
@@ -62,7 +99,7 @@ export const DifficultTable = ({cars}) => {
                 </TableHead>
                 <TableBody>
                     {
-                        records.slice(page * rowsPerPage, (page + 1) * rowsPerPage).map((item, index) =>
+                        stableSort(records, getComparator(order, orderBy)).slice(page * rowsPerPage, (page + 1) * rowsPerPage).map((item, index) =>
                             <TableRow key={index}>
                                 <TableCell>{item.brand}</TableCell>
                                 <TableCell>{item.model}</TableCell>
