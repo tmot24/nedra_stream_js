@@ -1,41 +1,23 @@
-import React from "react"
+import {memo, useState} from "react"
 import {makeStyles} from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
-import Table from "@material-ui/core/Table"
-import TableBody from "@material-ui/core/TableBody"
-import TableCell from "@material-ui/core/TableCell"
-import TableContainer from "@material-ui/core/TableContainer"
-import TableHead from "@material-ui/core/TableHead"
-import TablePagination from "@material-ui/core/TablePagination"
-import TableRow from "@material-ui/core/TableRow"
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow
+} from "@material-ui/core"
 
 const columns = [
     {id: "brand", label: "Brand", minWidth: 170},
-    {id: "model", label: "Model", minWidth: 100},
-    {
-        id: "year",
-        label: "Year",
-        minWidth: 170,
-        align: "right",
-    },
-    {
-        id: "fuel",
-        label: "Fuel",
-        minWidth: 170,
-        align: "right",
-    },
-    {
-        id: "bodyType",
-        label: "BodyType",
-        minWidth: 170,
-        align: "right",
-    },
-    {
-        id: "price",
-        label: "Price",
-        minWidth: 170,
-        align: "right",
-    },
+    {id: "model", label: "Model", minWidth: 170, align: "right"},
+    {id: "year", label: "Year", minWidth: 170, align: "right"},
+    {id: "fuel", label: "Fuel", minWidth: 170, align: "right"},
+    {id: "bodyType", label: "BodyType", minWidth: 170, align: "right"},
+    {id: "price", label: "Price", minWidth: 170, align: "right"},
 ]
 
 const useStyles = makeStyles({
@@ -50,10 +32,11 @@ const useStyles = makeStyles({
     },
 })
 
-export const BasicTable = React.memo(({cars}) => {
+export const BasicTable = memo(({cars}) => {
     const classes = useStyles()
-    const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowsPerPage] = React.useState(10)
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(10)
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage)
@@ -86,7 +69,6 @@ export const BasicTable = React.memo(({cars}) => {
                             {cars.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) =>
                                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                     {columns.map((column, index) => {
-                                        console.log(cars)
                                         const value = row[column.id]
                                         return (
                                             <TableCell key={index} align={column.align}>

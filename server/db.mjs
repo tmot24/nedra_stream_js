@@ -11,7 +11,6 @@ class Car {
 
 export const db = {
     cars: [new Car("Audi", "100",2020,"diesel","Hatchback",2000),
-        new Car("Audi", "100",2020,"diesel","Hatchback",2000),
         new Car("BMW", "1 серии",2020,"diesel","Hatchback",2000),
         new Car("Chery", "Amulet (A15)",2020,"diesel","Hatchback",2000),
         new Car("Chevrolet", "Astro",2020,"diesel","Hatchback",2000),
