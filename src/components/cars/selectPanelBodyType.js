@@ -30,6 +30,7 @@ export const SelectPanelBodyType = ({cars, setBodyTypeFilter}) => {
                 <Select
                     value={state}
                     onChange={handleChange}
+                    label={"Bodytype"}
                 >
                     <MenuItem value="">
                         <em>None</em>

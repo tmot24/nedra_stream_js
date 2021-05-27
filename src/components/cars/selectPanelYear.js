@@ -30,6 +30,7 @@ export const SelectPanelYear = ({cars, setYearFilter}) => {
                 <Select
                     value={state}
                     onChange={handleChange}
+                    label={"Year"}
                 >
                     <MenuItem value="">
                         <em>None</em>

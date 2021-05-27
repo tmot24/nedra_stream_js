@@ -30,6 +30,7 @@ export const SelectPanelPrice = ({cars, setPriceFilter}) => {
                 <Select
                     value={state}
                     onChange={handleChange}
+                    label={"Price"}
                 >
                     <MenuItem value="">
                         <em>None</em>

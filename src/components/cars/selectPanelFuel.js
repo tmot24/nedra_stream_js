@@ -30,6 +30,7 @@ export const SelectPanelFuel = ({cars, setFuelFilter}) => {
                 <Select
                     value={state}
                     onChange={handleChange}
+                    label={"Fuel"}
                 >
                     <MenuItem value="">
                         <em>None</em>

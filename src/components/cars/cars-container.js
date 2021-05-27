@@ -1,6 +1,6 @@
 import {connect} from "react-redux"
 import {getCars} from "../redux/carsReducer"
-import {DifficultTable} from "./difficult-table"
+import {MainTable} from "./mainTable"
 import {useEffect} from "react"
 
 const CarsContainer = ({cars, getCars}) => {
@@ -9,7 +9,7 @@ const CarsContainer = ({cars, getCars}) => {
     }, [getCars])
     return (
         <div>
-            <DifficultTable cars={cars}/>
+            <MainTable cars={cars}/>
         </div>
     )
 }

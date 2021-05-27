@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     }
 })
 
-export const DifficultTable = ({cars}) => {
+export const MainTable = ({cars}) => {
     const classes = useStyles()
     const [records, setRecords] = useState([])
     const [page, setPage] = useState(0)
